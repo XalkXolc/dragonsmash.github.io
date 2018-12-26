@@ -1,0 +1,65 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="newvis.css" />
+		<script src="../../lib/jquery/jquery-3.3.1.min.js"></script>
+		<script src="../../lib/processing/processing.min.js"></script>
+		<script src="./newvis.js"></script>
+		<script src="../../lib/jsmediatags/jsmediatags.min.js"></script>
+	</head>
+	<body oncontextmenu="return false;">
+		<canvas id="notedisplay">
+		</canvas>
+		<div id="newsongnotice"><div class="spinner-sm" style="margin-top: 3px;"></div><span id="newsongstage" style="background-color: transparent; border: none;"></span></div>
+		<div id="controls">
+			<div id="mainctrl">
+				<span id="currstat">No Song Loaded</span><span id="otherstat"><span id="currtitle">eigengrau, as applied to sound</span> -- <span id="currauth">your own brain and surroundings</span> -- <span id="currtime">0</span>/<span id="maxtime">around infinity</span></span>
+				<span id="credits">ThinkInvisible's AudioViz 3.0<span id="hidecredits">&nbsp;&nbsp;&nbsp;&nbsp;Mouseover this bar for controls</span></span>
+			</div>
+			<div id="hoverctrl">
+				<div id="hoverctrl-notes" class="ctrlbody" style="height: auto;text-overflow:inherit;white-space:inherit;">
+					<span class="ctrltitle">Important Notes</span><br />
+					A yellow triangle <div class="warnhover" title="Yeah, like that."></div> indicates that there's something you probably need to know about the adjacent option before changing it; hold your cursor still over the triangle (or any attached caption) to find out what that something is.<br />
+					A flashing red-yellow triangle <div class="warnhoversevere" title="Don't worry, this is just a drill, nothing's actually broken!"></div> is the same, plus there's severe risk to your browser, personal data, etc. involved. Speaking of which:<br />
+					<b class="warncaption" title="Epilepsy warning applies to this page -- see accompanying text"><div class="warnhoversevere"></div>EPILEPSY WARNING</b> Many of the settings for this visualizer will result in bright, flashing images. Please take this into account before attempting to load a song.<br />
+					<br />
+					KNOWN BUGS:<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- On Firefox, attempting to navigate Select inputs (drop-down multiple choice boxes) while a song is playing will cause focus to be forced elsewhere. For now, to change these, click on them to focus and then use arrow keys + enter to select.
+				</div>
+				<div id="hoverctrl-song" class="ctrlbody">
+					<span class="ctrltitle">Song Control</span><br />
+					<input type="file" accept="audio/*">
+					<div class="divbtn" id="btn-playpause">&gt; ||</div><br />
+					Vol: <span id="volumelabel">50</span>% <input id="volumeslider" type="range" min=0 max=1 step=0.01 value=0.5><br />
+					Rate: <span id="ratelabel">100</span>% <input id="rateslider" type="range" min=-4 max=4 step=0.125 value=0><div class="warnhover" title="This will throw the playback bar WAY out of whack."></div><br />
+				</div>
+				<div id="hoverctrl-appear" class="ctrlbody">
+					<span class="ctrltitle">Basic Appearance</span><br />
+					Skin:
+					<select id="skinsel" value="fragment">
+						<option value="reactor">Reactor</option>
+						<option value="kaleider">Kaleider</option>
+						<option value="fragment">Fragment</option>
+						<option value="shatter" selected="true">Shatter</option>
+						<option value="scales">Scales</option>
+						<option value="range">Range</option>
+					</select>
+					<select id="layoutsel" value="ring">
+						<option value="ring" selected="true">Ring</option>
+						<option value="mirr">Mirror</option>
+						<option value="floor">Floor</option>
+					</select>
+				</div>
+				<div id="hoverctrl-dispparams" class="ctrlbody">
+					<span class="ctrltitle">Display Parameters</span><br />
+				</div>
+				<div id="hoverctrl-advparams" class="ctrlbody">
+					<span class="ctrltitle">FFT Parameters <b class="warncaption" title="For advanced users only! Limits are set fairly low, but you might still manage to lag your browser out if you set these wrong."><div class="warnhoversevere"></div>UNSTABLE</b></span><br />
+					Bin Count (#): <span id="bincountlabel"></span><input id="bincount" type="range" min=1 max=14 step=1 value= 11><br />
+					Frequency Cutoffs (kHz): <input id="fftmin" type="number" min=0.01 max=1 step=0.01 value=0.02> to <input id="fftmax" type="number" min=1.01 max=20 step=0.01 value=2><br />
+					Amplitude Cutoffs (dB): <input id="fftvmin" type="number" min=-200 max=-31 step=1 value=-100> to <input id="fftvmax" type="number" min=-30 max=-1 step=1 value=-30><br />
+					Smoothing Constant (%): <input id="fftsmooth" type="number" min=0.01 max=0.99 step=0.01 value=0.8>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
