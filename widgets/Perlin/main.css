@@ -1,0 +1,61 @@
+body, html {
+	background-color: #ff44ff;
+	font-family:Monospace;
+	font-size:12px;
+	text-align:center;
+	font-weight: bold;
+	color: #ffffff;
+	/* body should be completely covered by the THREE.js context or the control box, this purple color should make it obvious*/
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	margin: 0px;
+	padding: 0px;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+a {
+	color: #ffffff;
+}
+
+#oldie a { color:#da0 }
+
+input[type="range"] {
+	-webkit-appearance: none;
+	background-color: #aaaaaa;
+	width: 100px;
+	height: 5px;
+	border: inset 2px #aaaaaa;
+	opacity: 0.5;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	background-color: #cccccc;
+	opacity: 0.8;
+	width: 5px;
+	height: 10px;
+}
+
+div.wrap {
+	height: 100%;
+	overflow: hidden;
+}
+
+div#container {
+	height: 100%;
+	float: right;
+	width: 85%;
+	background-color: #000000;
+}
+
+div#controls {
+	height: 100%;
+	width: 15%;
+	float: left;
+	background-color: #333333;
+}
