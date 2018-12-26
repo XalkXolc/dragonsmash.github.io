@@ -17,6 +17,19 @@ a:visited {
 	margin: 4px 2px 2px 2px;
 }
 
+.regind {
+	background-color: #f00;
+	color: #fff;
+	box-sizing: border-box;
+	border-radius: 0.1em;
+	width: 1em;
+	height: 1em;
+	display: inline-block;
+	text-indent: 0.2em;
+	font-family: Arial, sans-serif;
+	font-size: 75%;
+}
+
 #titlewrap {
 	margin-top: 0;
 	margin-bottom: 1em;

@@ -10,16 +10,28 @@ $(function() { //jQuery handler for doing things once the DOM is ready
 		"help I'm trapped in a randomized subtitle factory",
 		"check it:"
 	]));
-	var firstj = true;
+	var jified = false;
 	$('#jjjjj').on('click', function() {
 		  $('body :not(script)').contents().filter(function() {
 			return this.nodeType === 3;
 		  }).replaceWith(function() {
 			  return TIU.repMap(this.nodeValue, {'i':'j', 'j':'i', 'I':'J', 'J':'I'});
 		  });
-		if(firstj) {
-			$('#titlesub').html('jjjjjjjjjjjjjj jjjjjjjjjjjjjj jjjjjjjjjjjjjj');
-			firstj = false;
+		if(jified) {
+			$('#titlesub').html(TIU.pickRandom([
+				"oh <span class='regind'>J</span>eez what was that",
+				"sorry I dropped all my <span class='regind'>J</span>s",
+				"let us never speak of <span class='regind'>J</span> again",
+				"djd you hear somethjng?",
+				"j-drive disengaged",
+				"<span class='regind'>I</span>",
+				"please don't do that again",
+				"we can't stop here, this is <span class='regind'>J</span> country"
+			]));
+			jified = false;
+		} else {
+			$('#titlesub').html("jjjjjjjjjjjjjj jjjjjjjjjjjjjj <span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span>");
+			jified = true;
 		}
 	});
 	$('#titlesub').animate({'opacity': 1, 'text-indent': '2em'});
