@@ -404,6 +404,13 @@ Atom.prototype.calculateBondDipole = function(bondID) {
 	netDipole.mult(this.Bonds[bondID].Target.ENeg - this.ENeg);
 	return netDipole;
 }
+Atom.prototype.calculateMoleculeDipole = function() {
+	var netDipole = new PVector(0, 0, 0);
+	for(var i = 0; i < this.Molecule.length; i++) {
+		netDipole.add(this.Molecule[i].calculateDipoleMoment());
+	}
+	return netDipole;
+}
 
 Atom.prototype.renderElectrons = function(ctx) {
 	ctx.noStroke();
@@ -1455,7 +1462,7 @@ $(function() {
 				//fill(0, 255, 255, 100);
 				noFill();
 				rect(bb[0].x, bb[0].y, bb[1].x, bb[1].y);
-				var dipole = selected.calculateDipoleMoment();
+				var dipole = selected.calculateMoleculeDipole();
 				//stroke(0, 0, 0);
 				stroke(255);
 				line((bb[0].x+bb[1].x)/2, (bb[0].y+bb[1].y)/2, (bb[0].x+bb[1].x)/2+dipole.x, (bb[0].y+bb[1].y)/2+dipole.y);
