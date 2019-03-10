@@ -215,8 +215,6 @@ input[type="range"]::-webkit-slider-thumb {
 .tab-contents {
 	max-height: 45vh;
 	text-align: left;
-	overflow-x: scroll;
 	overflow-y: auto;
-	white-space: nowrap;
 	scrollbar-color: #450567 #230340;
 }
