@@ -17,6 +17,16 @@ a:visited {
 	margin: 4px 2px 2px 2px;
 }
 
+.j {
+	display: inline-block;
+	width: auto;
+	padding: 0;
+	margin: 0;
+	text-indent: 0;
+}
+
+a .j { text-decoration: underline; }
+
 .regind {
 	background-color: #f00;
 	color: #fff;

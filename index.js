@@ -1,4 +1,7 @@
 $(function() { //jQuery handler for doing things once the DOM is ready
+	////////////////////
+	//Title Randomizer//
+	////////////////////
 	$('#titlesub').html(TIU.pickRandom([
 		".github.io",
 		"lives here",
@@ -10,13 +13,48 @@ $(function() { //jQuery handler for doing things once the DOM is ready
 		"help I'm trapped in a randomized subtitle factory",
 		"check it:"
 	]));
-	var jified = false;
+	$('#titlesub').animate({'opacity': 1, 'text-indent': '2em'});
+	
+	///////////
+	//J-Drive//
+	///////////
+	var jified = false; //:j:
+	var jShakeAmt = 1; //pixels at peak
+	var jShakeBaseTime = 0.15; //time for one oscillation
+	var jShakeOsc = 5; //total oscillation counts
+	var jShakeFalloff = 0.5; //exponential falloff, per oscillation
+	$('body :not(script)').contents().filter(function() {
+		return this.nodeType === 3;
+	}).replaceWith(function() {
+		return TIU.repMap(this.nodeValue, {'i':'<span class="j">i</span>', 'j':'<span class="j">j</span>', 'I':'<span class="j">I</span>', 'J':'<span class="j">J</span>'});
+	});
 	$('#jjjjj').on('click', function() {
-		  $('body :not(script)').contents().filter(function() {
-			return this.nodeType === 3;
-		  }).replaceWith(function() {
-			  return TIU.repMap(this.nodeValue, {'i':'j', 'j':'i', 'I':'J', 'J':'I'});
-		  });
+		$('.j').contents().replaceWith(function() {
+			return TIU.repMap(this.nodeValue,  {'i':'j', 'j':'i', 'I':'J', 'J':'I'});
+		});
+		$('.j').each(function(ind, elemraw) {
+			var elem = $(elemraw);
+			var jqjRngTheta = Math.random()*Math.PI*2;
+			var jqjRngX = Math.cos(jqjRngTheta);
+			var jqjRngY = Math.sin(jqjRngTheta);
+			
+			$({fProg:0}).animate({fProg: 100},
+				{step: function(now) {
+					var toscCount = Math.floor(now/100 / jShakeBaseTime);
+					var toscProg = now/100/jShakeBaseTime - toscCount;
+					if(toscProg > 0.5) toscProg = 1 - toscProg;
+					toscProg *= 4;
+					toscProg -= 1;
+					var toscF = Math.pow(jShakeFalloff, toscCount) * jShakeAmt * toscProg;
+					var tx = jqjRngX * toscF;
+					var ty = jqjRngY * toscF;
+					var tstr = 'translate(' + tx + 'em,' + ty + 'em)';
+					//var tstr = 'translateX(' + tx + 'px)';
+					elem.css('transform', tstr);
+					elem.css('-webkit-transform', tstr);
+					elem.css('-moz-transform', tstr);
+				}, duration:jShakeBaseTime*jShakeOsc*1000}, 'linear');
+		});
 		if(jified) {
 			$('#titlesub').html(TIU.pickRandom([
 				"oh <span class='regind'>J</span>eez what was that",
@@ -34,5 +72,4 @@ $(function() { //jQuery handler for doing things once the DOM is ready
 			jified = true;
 		}
 	});
-	$('#titlesub').animate({'opacity': 1, 'text-indent': '2em'});
 });
