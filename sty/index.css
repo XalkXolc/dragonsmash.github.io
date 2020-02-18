@@ -25,6 +25,10 @@ a:visited {
 	text-indent: 0;
 }
 
+.jnowrap {
+	white-space: nowrap;
+}
+
 a .j { text-decoration: underline; }
 
 .regind {

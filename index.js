@@ -23,15 +23,26 @@ $(function() { //jQuery handler for doing things once the DOM is ready
 	var jShakeBaseTime = 0.15; //time for one oscillation
 	var jShakeOsc = 5; //total oscillation counts
 	var jShakeFalloff = 0.5; //exponential falloff, per oscillation
+	//Initial replacement, phase 1: wrap all words containing iIjJ in a nowrap span, otherwise CSS will sometimes insert mid-word breaks before or after a span'd character
+	$('body :not(script)').contents().filter(function() {
+		return this.nodeType === 3;
+	}).replaceWith(function() {
+		///\b\w*[IiJj]\w*\b/g
+		return this.nodeValue.replace(/\b(\w*[IiJj]\w*)\b/ig, "<span class='jnowrap'>$1</span>");
+	});
+	//Initial replacement, phase 2: wrap all iIjJ characters in inline-block spans to allow css transform
 	$('body :not(script)').contents().filter(function() {
 		return this.nodeType === 3;
 	}).replaceWith(function() {
 		return TIU.repMap(this.nodeValue, {'i':'<span class="j">i</span>', 'j':'<span class="j">j</span>', 'I':'<span class="j">I</span>', 'J':'<span class="j">J</span>'});
 	});
+	//Apply click handler to the j-drive button
 	$('#jjjjj').on('click', function() {
+		//Swap characters
 		$('.j').contents().replaceWith(function() {
 			return TIU.repMap(this.nodeValue,  {'i':'j', 'j':'i', 'I':'J', 'J':'I'});
 		});
+		//Apply randomly-directed shake animation with parameters defined above
 		$('.j').each(function(ind, elemraw) {
 			var elem = $(elemraw);
 			var jqjRngTheta = Math.random()*Math.PI*2;
@@ -55,6 +66,7 @@ $(function() { //jQuery handler for doing things once the DOM is ready
 					elem.css('-moz-transform', tstr);
 				}, duration:jShakeBaseTime*jShakeOsc*1000}, 'linear');
 		});
+		//Replace subtitle
 		if(jified) {
 			$('#titlesub').html(TIU.pickRandom([
 				"oh <span class='regind'>J</span>eez what was that",
