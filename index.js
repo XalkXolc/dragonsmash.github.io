@@ -80,7 +80,7 @@ $(function() { //jQuery handler for doing things once the DOM is ready
 			]));
 			jified = false;
 		} else {
-			$('#titlesub').html("jjjjjjjjjjjjjj jjjjjjjjjjjjjj <span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span><span class='regind'>J</span>");
+			$('#titlesub').html(["j".repeat(14), "j".repeat(14), "<span class='regind'>J</span>".repeat(14)].join(" "));
 			jified = true;
 		}
 	});
