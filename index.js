@@ -19,10 +19,15 @@ $(function() { //jQuery handler for doing things once the DOM is ready
 	//J-Drive//
 	///////////
 	var jified = false; //:j:
-	var jShakeAmt = 1; //pixels at peak
-	var jShakeBaseTime = 0.15; //time for one oscillation
-	var jShakeOsc = 5; //total oscillation counts
-	var jShakeFalloff = 0.5; //exponential falloff, per oscillation
+	var jShakeMaj = 1; //semi-major axis of ellipse, em
+	var jShakeMin = 0.3; //semi-minor axis of ellipse, em
+	var jShakeSpeed = 0.05; //time for one cycle, sec
+	var jShakeTime = 0.75; //total animation time, sec
+	var jShakeMajVar = 0.1; //variance +/-
+	var jShakeMinVar = 0.05;
+	var jShakeSpeedVar = 0.02;
+	var jShakeTimeVar = 0.1;
+	var jShakeFalloff = 0.9; //exponent of falloff curve
 	//Initial replacement, phase 1: wrap all words containing iIjJ in a nowrap span, otherwise CSS will sometimes insert mid-word breaks before or after a span'd character
 	$('body :not(script)').contents().filter(function() {
 		return this.nodeType === 3;
@@ -45,26 +50,33 @@ $(function() { //jQuery handler for doing things once the DOM is ready
 		//Apply randomly-directed shake animation with parameters defined above
 		$('.j').each(function(ind, elemraw) {
 			var elem = $(elemraw);
-			var jqjRngTheta = Math.random()*Math.PI*2;
-			var jqjRngX = Math.cos(jqjRngTheta);
-			var jqjRngY = Math.sin(jqjRngTheta);
+			var jqjTheta = Math.random()*Math.PI*2;
+			var jqjTCos = Math.cos(jqjTheta);
+			var jqjTSin = Math.sin(jqjTheta);
+			var jqjSpeed = jShakeSpeed + (Math.random()*2-1) * jShakeSpeedVar;
+			var jqjMaj = jShakeMaj + (Math.random()*2-1) * jShakeMajVar;
+			var jqjMin = jShakeMin + (Math.random()*2-1) * jShakeMinVar;
+			var jqjTime = jShakeTime + (Math.random()*2-1) * jShakeTimeVar;
 			
 			$({fProg:0}).animate({fProg: 100},
 				{step: function(now) {
-					var toscCount = Math.floor(now/100 / jShakeBaseTime);
-					var toscProg = now/100/jShakeBaseTime - toscCount;
-					if(toscProg > 0.5) toscProg = 1 - toscProg;
-					toscProg *= 4;
-					toscProg -= 1;
-					var toscF = Math.pow(jShakeFalloff, toscCount) * jShakeAmt * toscProg;
-					var tx = jqjRngX * toscF;
-					var ty = jqjRngY * toscF;
+					var nt = now / 100 / jqjSpeed;
+					
+					var ncos = Math.cos(nt);
+					var nsin = Math.sin(nt);
+					
+					var nx = jqjMaj * ncos * jqjTCos - jqjMin * nsin * jqjTSin;
+					var ny = jqjMaj * ncos * jqjTSin + jqjMin * nsin * jqjTCos;
+					
+					var nfall = 1-Math.pow(now/100, 1/jShakeFalloff);
+					
+					var tx = nx * nfall;
+					var ty = ny * nfall;
 					var tstr = 'translate(' + tx + 'em,' + ty + 'em)';
-					//var tstr = 'translateX(' + tx + 'px)';
 					elem.css('transform', tstr);
 					elem.css('-webkit-transform', tstr);
 					elem.css('-moz-transform', tstr);
-				}, duration:jShakeBaseTime*jShakeOsc*1000}, 'linear');
+				}, duration:jqjTime*1000}, 'linear');
 		});
 		//Replace subtitle
 		if(jified) {
